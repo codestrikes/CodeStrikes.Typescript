@@ -74,3 +74,6 @@ typings/
 
 #VS Code
 .vscode/
+
+#Dist
+dist/

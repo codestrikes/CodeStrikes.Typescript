@@ -5,6 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start": "node ./node_modules/ts-node/dist/bin.js index.ts",
+    "build": "tsc --build tsconfig.json",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "codestrikes.net",
@@ -14,6 +15,6 @@
     "typescript": "^3.1.1"
   },
   "devDependencies": {
-    "@types/node": "^10.11.4"
+    "@types/node": "10.11.4"
   }
 }
