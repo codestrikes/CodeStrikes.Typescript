@@ -1,0 +1,19 @@
+{
+  "name": "codestrikes.typescript",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "node ./node_modules/ts-node/dist/bin.js index.ts",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "codestrikes.net",
+  "license": "ISC",
+  "dependencies": {
+    "ts-node": "^7.0.1",
+    "typescript": "^3.1.1"
+  },
+  "devDependencies": {
+    "@types/node": "^10.11.4"
+  }
+}
