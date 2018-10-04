@@ -6,6 +6,8 @@
   "scripts": {
     "start": "node ./node_modules/ts-node/dist/bin.js index.ts",
     "build": "tsc --build tsconfig.json",
+    "build-exe": "nexe dist/index.js -o dist/bot.exe",
+    "build-exe-linux": "nexe dist/index.js --target linux-x64 -o dist/bot",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "codestrikes.net",
@@ -15,6 +17,7 @@
     "typescript": "^3.1.1"
   },
   "devDependencies": {
-    "@types/node": "10.11.4"
+    "@types/node": "10.11.4",
+    "nexe": "^2.0.0-rc.34"
   }
 }
