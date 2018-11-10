@@ -6,12 +6,16 @@ export class RoundContext {
     private lastOpponentMoves: ReadonlyMoveCollection;
     private myDamage: number;
     private opponentDamage: number;
+	private myLifePoints: number;
+    private opponentLifePoints: number;
 
-    public constructor(lastOpponentMoves: ReadonlyMoveCollection, myDamage: number, opponentDamage: number) {
+    public constructor(lastOpponentMoves: ReadonlyMoveCollection, myDamage: number, opponentDamage: number, myLifePoints: number, opponentLifePoints: number) {
         this.lastOpponentMoves = lastOpponentMoves;
         this.myDamage = myDamage;
         this.opponentDamage = opponentDamage;
         this.myMoves = new MoveCollection();
+		this.myLifePoints = myLifePoints;
+		this.opponentLifePoints = opponentLifePoints;
     }
 
     public setMoves(moves: MoveCollection) {

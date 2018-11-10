@@ -7,6 +7,7 @@ import { MoveCollection } from "./move-collection";
 import { FightResultType } from "./fight-result-type";
 import { FightResults } from "./fight-results";
 import { FightExceptionReason } from "./fight-exception-reason";
+import { FightResultError } from "./fight-result-error";
 
 export class Fight
 {
@@ -38,7 +39,7 @@ export class Fight
         {
             round++;
 
-            let bot1Context = new RoundContext(f2Move, score1, score2);
+            let bot1Context = new RoundContext(f2Move, score1, score2, f1Lifepoints, f2Lifepoints);
 
             let moves: MoveCollection = null;
 
@@ -49,14 +50,17 @@ export class Fight
             }
             catch (exc)
             {
-                return FightResults.Error(FightExceptionReason.Runtime, FightResultType.Lost, exc).setRoundResults(roundResults);
+               let error = new FightResultError(FightExceptionReason.Runtime, '', exc);
+                return FightResults.Error(error, FightResultType.Lost).setRoundResults(roundResults);
             }
 
             if (!this.gameLogic.validate(moves))
-                return FightResults.Error(FightExceptionReason.IllegalMove, FightResultType.Lost, this.bot1 + " made an illegal move").setRoundResults(roundResults);
+            {
+				let error = new FightResultError(FightExceptionReason.IllegalMove, '', this.bot1 + " made an illegal move");
+                return FightResults.Error(error, FightResultType.Lost).setRoundResults(roundResults);
+			}
 
-
-            let bot2Context = new RoundContext(f1Move, score2, score1);
+            let bot2Context = new RoundContext(f1Move, score2, score1, f2Lifepoints, f1Lifepoints);
             try
             {
                 moves = this.bot2.nextMove(bot2Context);
@@ -64,10 +68,15 @@ export class Fight
             }
             catch (exc)
             {
-                return FightResults.Error(FightExceptionReason.Runtime, FightResultType.Win, exc).setRoundResults(roundResults);
+				let error = new FightResultError(FightExceptionReason.Runtime, '', exc);
+                return FightResults.Error(error, FightResultType.Win).setRoundResults(roundResults);
             }
+			
             if (!this.gameLogic.validate(moves))
-                return FightResults.Error(FightExceptionReason.IllegalMove, FightResultType.Win, this.bot2 + " made an illegal move").setRoundResults(roundResults);
+			{
+				let error = new FightResultError(FightExceptionReason.IllegalMove, '', this.bot2 + " made an illegal move");
+                return FightResults.Error(error, FightResultType.Win).setRoundResults(roundResults);
+			}
 
             f1Move = bot1Context.getMyMoves();
             f2Move = bot2Context.getMyMoves();

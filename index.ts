@@ -10,7 +10,7 @@ const playerBot = new PlayerBot();
 const kickboxer = new Kickboxer();
 const boxer = new Boxer();
 
-console.log(`Executing fight: ${playerBot.toString()} vs ${boxer.toString()}`);
+console.log(`Executing fight: ${playerBot.toString()} vs ${kickboxer.toString()}`);
 let fight = new Fight(playerBot, kickboxer, new StandardGameLogic());
 let result = fight.execute();
 

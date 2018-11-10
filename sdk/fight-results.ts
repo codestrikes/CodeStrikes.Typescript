@@ -1,5 +1,6 @@
 import { FightResultType } from "./fight-result-type";
 import { RoundResult } from "./round-result";
+import { FightResultError } from "./fight-result-error";
 import { FightExceptionReason } from "./fight-exception-reason";
 
 export class FightResults
@@ -8,8 +9,7 @@ export class FightResults
     private opponentScore: number;
     private result: FightResultType;
     private isErrorV: boolean;
-    private errorMessage: String;
-    private errorType: FightExceptionReason;
+	private fightResultError: FightResultError;
     private roundResults: RoundResult[];
 
     private StandardRes(playerScore: number, opponentScore: number, result: FightResultType)
@@ -21,12 +21,11 @@ export class FightResults
         return this;
     }
 
-    private ErrorRes(errorType: FightExceptionReason, result: FightResultType, errorMessage: String)
+    private ErrorRes(fightResultError: FightResultError, result: FightResultType)
     {
         this.roundResults = new Array<RoundResult>();
-        this.errorType = errorType;
+        this.fightResultError = fightResultError;
         this.result = result;
-        this.errorMessage = errorMessage;
         this.isErrorV = true;
         return this;
     }
@@ -46,9 +45,9 @@ export class FightResults
         return new FightResults().StandardRes(playerScore, opponentScore, FightResultType.Lost);
     }
 
-    public static Error(errorType: FightExceptionReason, result: FightResultType, errorMessage: String): FightResults
+    public static Error(fightResultError: FightResultError, result: FightResultType): FightResults
     {
-        return new FightResults().ErrorRes(errorType, result, errorMessage);
+        return new FightResults().ErrorRes(fightResultError, result);
     }
 
     public setRoundResults(results: RoundResult[]): FightResults
@@ -74,11 +73,11 @@ export class FightResults
     }
 
     public getErrorMessage(): String {
-        return this.errorMessage;
+        return this.fightResultError.message;
     }
 
     public getErrorType(): FightExceptionReason {
-        return this.errorType;
+        return this.fightResultError.errorType;
     }
 
     public getRoundResults(): RoundResult[] {
@@ -88,7 +87,7 @@ export class FightResults
     public toString(): String {
         if (this.isErrorV)
         {
-            return `${FightResultType[this.result]} with error : ${this.errorType} - message: ${this.errorMessage}`;
+            return `${FightResultType[this.result]} with error : ${this.fightResultError.errorType} - message: ${this.fightResultError.message}`;
         }
 
         return `${FightResultType[this.result]}: PlayerScore: ${this.playerScore}, OpponentScore: ${this.opponentScore}`;        

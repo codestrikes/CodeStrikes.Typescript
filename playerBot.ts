@@ -45,6 +45,6 @@ export class PlayerBot extends BotBase {
 
     public toString(): String
     {
-        return "Boxer";
+        return "PlayerBot";
     }
 }
