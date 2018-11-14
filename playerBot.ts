@@ -8,9 +8,6 @@ export class PlayerBot extends BotBase {
     private attack2 = Area.HookPunch;
     private defence = Area.HookKick;
 
-    private myScoreTotal = 0;
-    private opponentScoreTotal = 0;
-
     private changeDefence(oldDefence: Area): Area
     {
         return (oldDefence == Area.HookKick) ? Area.HookPunch : Area.HookKick;
@@ -23,9 +20,9 @@ export class PlayerBot extends BotBase {
 
     public nextMove(context: RoundContext): MoveCollection
     {
-        this.myScoreTotal += context.getMyDamage();
-        this.opponentScoreTotal += context.getOpponentDamage();
-
+        const myLifePoints = context.getMyLifePoints();
+        const opponentLifePoints = context.getOpponentLifePoints();
+        
         context.getMyMoves()
                 .addAttack(this.attack1)
                 .addAttack(this.attack2);
@@ -35,7 +32,7 @@ export class PlayerBot extends BotBase {
             this.defence = this.changeDefence(this.defence);
         }
 
-        if (this.myScoreTotal >= this.opponentScoreTotal)
+        if (myLifePoints >= opponentLifePoints)
             context.getMyMoves().addAttack(this.createRandomAttack()); // 3 attacks, 0 defence
         else
             context.getMyMoves().addDefence(this.defence);

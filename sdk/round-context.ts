@@ -37,4 +37,12 @@ export class RoundContext {
     public getOpponentDamage(): number {
         return this.opponentDamage;
     }
+
+    public getMyLifePoints(): number {
+        return this.myLifePoints;
+    }
+
+    public getOpponentLifePoints(): number {
+        return this.opponentLifePoints;
+    }
 }
